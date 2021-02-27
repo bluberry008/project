@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<title>修改密码</title>
+		  <link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
+		    <link rel="stylesheet" type="text/css" href="../themes/icon.css">
+		    <!-- <link rel="stylesheet" type="text/css" href="../demo.css"> -->
+		    <script type="text/javascript" src="../jquery.min.js"></script>
+		    <script type="text/javascript" src="../jquery.easyui.min.js"></script>
+	</head>
+	<body>
+		
+	    <div style="margin:20px 0;"></div>
+	    <div class="easyui-panel" title="修改密码" style="width:100%;max-width:400px;padding:30px 60px;">
+
+	            <div style="margin-bottom:20px">
+					<label>账号:</label> <text th:text="${session.phone}"></text>
+<!--	                <input class="easyui-textbox" name="name" style="width:100%" data-options="label:'账号:',required:true" th:text="${session.phone}">-->
+	            </div>
+			<form id="ff" th:method="post" th:action="@{/modify}">
+	            <div style="margin-bottom:20px">
+	                <input class="easyui-textbox"  id="p" type="password" name="psd" style="width:100%" data-options="label:'新密码:',required:true">
+	            </div>
+				<div style="margin-bottom:20px"  >
+				    <input class="easyui-textbox" id="pp" type="password" style="width:100%" data-options="label:'确认新密码:',required:true">
+					<span id="i"></span>
+				</div>
+
+	        <div style="text-align:center;padding:5px 0">
+	            <a  th:href="@{/index}" class="easyui-linkbutton" onclick="submitForm()" style="width:80px">确认修改</a>
+	            <!-- <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()" style="width:80px">Clear</a> -->
+	        </div>
+			</form>
+	    </div>
+	    <script>
+	        function submitForm(){
+				 if($('#p').val()==$('#pp').val()){
+					 $('#i').html("两次密码同");
+					 $('#ff').form('submit'); 
+				 }
+	            else{
+					$('#i').html("<p>两次密码不同</p>");
+				}
+	        }
+	    </script>
+	</body>
+</html>

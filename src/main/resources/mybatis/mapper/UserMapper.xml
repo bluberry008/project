@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cyz.mygraduationproject.mapper.UserMapper">
+    <!--public User getUser(String phone, String psd);-->
+    <select id="getUser" resultType="com.cyz.mygraduationproject.bean.User">
+        select * from user where user_phone = #{userPhone} and user_psd=#{userPsd}
+    </select>
+    <select id="getUserphone" resultType="com.cyz.mygraduationproject.bean.User">
+        select * from user where user_phone = #{userPhone}
+    </select>
+    <insert id="insertUser" parameterType="com.cyz.mygraduationproject.bean.User">
+           insert into user values (null,#{userPhone},#{userPsd},#{userName},1);
+    </insert>
+    <update id="modifyPassword" parameterType="com.cyz.mygraduationproject.bean.User">
+        update user set user_psd=#{userPsd} where user_phone=#{userPhone};
+    </update>
+</mapper>

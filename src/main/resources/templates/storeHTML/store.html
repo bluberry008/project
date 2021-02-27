@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<!-- -->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>管理员后台</title>
+    <script th:src="@{/layui.js}"></script>
+    <script th:src="@{/jquery.min.js}"></script>
+    <link rel="stylesheet" href="/css/layui.css" media="all">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">管理员后台</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item layadmin-flexible" lay-unselect>
+                <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩">
+                    <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
+                </a>
+            </li>
+            <li class="layui-nav-item" lay-unselect>
+                <a href="javascript:;" layadmin-event="refresh" title="刷新">
+                    <i class="layui-icon layui-icon-refresh-3"></i>
+                </a>
+            </li>
+            <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                <input type="text" placeholder="搜索..." autocomplete="off" class="layui-input layui-input-search" layadmin-event="serach" lay-action="template/search.html?keywords=">
+            </li>
+            <li class="layui-nav-item" lay-unselect>
+                <a href="javascript:;">
+                    <cite>贤心</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a lay-href="set/user/info.html">基本资料</a></dd>
+                    <dd><a lay-href="set/user/password.html">修改密码</a></dd>
+                    <hr>
+                    <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>
+                </dl>
+            </li>
+        </ul>
+
+
+
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a class="" href="javascript:;">汽车详情</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="addCar.html">增加汽车</a></dd>
+                            <dd><a href="modifycar.html">修改汽车</a></dd>
+                            <dd><a href="javascript:;">查询所有汽车</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">订单详情</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;">查询订单</a></dd>
+                            <dd><a href="javascript:;">订单汇总</a></dd>
+                            <dd><a href="">创建订单</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item"><a href="">顾客评价</a></li>
+                    <li class="layui-nav-item"><a href="">发布站内新闻</a></li>
+                    <li class="layui-nav-item"><a href="">总结</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="layui-body childrenBody">
+        <!-- 内容主体区域  -->
+        <!--
+         <div class="layui-fluid">
+             <div class="layui-card">
+               <div class="layui-card-header layuiadmin-card-header-auto">
+                 <button class="layui-btn layuiadmin-btn-tags" data-type="add">添加</button>
+               </div>
+               <div class="layui-card-body">
+                 <table id="LAY-app-content-tags" lay-filter="LAY-app-content-tags"></table>
+                 <script type="text/html" id="layuiadmin-app-cont-tagsbar">
+                   <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+                   <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+                 </script>
+               </div>
+             </div>
+           </div> -->
+
+        <table class="layui-hide" id="test" lay-filter="test"></table>
+        <!-- 内容主体区域  -->
+    </div>
+</div>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script type="text/javascript">
+    layui.use('table', function(){
+        var table = layui.table;
+
+        table.render({
+            elem: '#test'
+            ,url:'/stores'
+            ,method:'get'
+            ,cols: [
+                [
+                {field:'id', width:90, title: 'ID', sort: true}
+                ,{field:'storeCity', width:150, title: '城市'}
+                ,{field:'storeName', width:200, title: '门店名'}
+                ,{field:'storeAdress', width:340, title: '具体地址'}
+                ,{fixld: 'right', title:'操作', toolbar: '#barDemo', minwidth:150}
+            ]
+            ]
+            ,page: true
+        });
+
+        //监听行事件
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            //console.log(obj)
+            if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del();
+                    layer.close(index);
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>

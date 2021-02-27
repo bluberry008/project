@@ -4,9 +4,9 @@ import lombok.Data;
 
 import java.util.List;
 @Data
-public class ObjectJson {
+public class ObjectJson<T> {
     Integer code;
     String msg;
     Integer count;
-    List<Object> data;
+    List<T> data;
 }

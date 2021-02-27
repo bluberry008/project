@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 @Slf4j
 @Controller
 public class StoreController {
@@ -24,23 +24,16 @@ public class StoreController {
     StoresService storesService;
 
 
-
     @GetMapping("/stores")
+    @ResponseBody
     public ObjectJson getAllStores(HttpServletResponse response) throws IOException {
-       List<Store> list=new ArrayList<Store>();
-
-            response.setCharacterEncoding("utf-8");
-            response.setContentType("text/html;charset=utf-8");
-             list=storesService.getAllStores();
-            ObjectJson json=new ObjectJson();
-            json.setCode(0);
-            json.setMsg("success");
-            json.setCount(list.size());
-            json.setData(Collections.singletonList(list));
-           String rnJson= JSON.toJSONString(json);
-           response.getWriter().write(rnJson);
-           log.info(rnJson);
-           return json;
+        List<Store> list = storesService.getAllStores();
+        ObjectJson<Store> json = new ObjectJson<>();
+        json.setCode(0);
+        json.setMsg("success");
+        json.setCount(list.size());
+        json.setData(list);
+        return json;
     }
 
 

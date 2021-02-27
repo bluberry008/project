@@ -4,9 +4,8 @@ import lombok.Data;
 
 @Data
 public class Store {
-    Long id;
+    Long storeId;
     String storeName;
     String storeCity;
     String storeAdress;
-
 }
